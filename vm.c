@@ -44,6 +44,7 @@ vm_destroy(machine vm)
 			destroy16(vm->vals);
 		if (vm->opers)
 			destroy8(vm->opers);
+		free(vm);
 	}
 }
 
