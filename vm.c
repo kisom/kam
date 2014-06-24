@@ -80,6 +80,23 @@ eval(machine vm)
 		printf("DIV %d %d\n", a, b);
 		push16(vm->vals, a / b);
 		break;
+	case INSTR_EQL:
+		printf("EQL %d %d\n", a, b);
+		push16(vm->vals, a == b);
+		break;
+	case INSTR_JRE:
+		printf("JRE %d %d\n", a, b);
+		if (a == 1) {
+			if (b & (1 << 15)) {
+				printf("BACK %hu\n", (~b)+1);
+				vm->pc -= (~b)+1;
+				printf("PC=%d\n", vm->pc);
+			} else {
+				printf("FWD %d\n", b);
+				vm->pc += b;
+			}
+		}
+		break;
 	default:
 		abort(); /* illegal instruction trap ;) */
 	}
@@ -113,7 +130,10 @@ vm_step(machine vm, uint8_t *prog, uint16_t prog_len)
 	case INSTR_SUB:  /* the op stack                        */
 	case INSTR_DIV:
 	case INSTR_MUL:
-		printf("PUSH OPER %d\n", oper);
+	case INSTR_EQL:
+	case INSTR_JRE:
+	case INSTR_JRN:
+		printf("OPER %d\n", oper);
 		push8(vm->opers, oper);
 		break;
 	case INSTR_IMM:
@@ -124,19 +144,23 @@ vm_step(machine vm, uint8_t *prog, uint16_t prog_len)
 		}
 		/* ensure we have enough progspace left */
 		if ((prog_len - vm->pc) < 2) {
-			fprintf(stderr, "[!] out of program space.\n");
+			fprintf(stderr, "[!] Out of program space.\n");
 			fprintf(stderr, "    %d bytes remain.\n", 
 			    prog_len - vm->pc);
 			return VM_ERR;
 		}
 		memcpy(&val, prog + vm->pc, sizeof(val));
-		printf("PUSH IMM %d\n", val);
+		printf("IMM %d\n", val);
 		push16(vm->vals, val);
 		vm->pc += 2; /* 2 bytes == 16 bits */
 		break;
 	case INSTR_DO:
 		printf("DO\n");
 		return eval(vm);
+	default:
+		fprintf(stderr, "[!] Unknown operator: %d.\n", oper);
+		return VM_ERR;
+
 	}
 	return VM_OK;
 }
@@ -151,6 +175,8 @@ vm_run(machine vm, uint8_t *prog, uint16_t prog_len)
 		vm_status = vm_step(vm, prog, prog_len);
 
 	} while (VM_OK == vm_status);
+
+	return vm_status;
 }
 
 

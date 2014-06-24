@@ -35,7 +35,7 @@ run(const char *filespec)
 	if (NULL == (bin = fopen(filespec, "rb")))
 		goto exit;
 
-	if (st.st_size != fread(prog, sizeof(uint8_t), st.st_size, bin))
+	if (st.st_size != (off_t)fread(prog, sizeof(uint8_t), st.st_size, bin))
 		goto exit;
 
 	vm = vm_new();
@@ -57,7 +57,7 @@ exit:
 		vm_destroy(vm);
 	if (bin)
 		fclose(bin);
-	return EXIT_FAILURE;
+	return status;
 }
 
 

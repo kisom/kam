@@ -20,7 +20,7 @@ test_stack8(void)
 
 	push8(st, 1);
 	push8(st, 2);
-	if (2 != pop8(st)) {
+	if (2 != (val = pop8(st))) {
 		fprintf(stderr,
 		    "FAILED: should have received 2 from the stack.\n");
 		fprintf(stderr,
@@ -36,7 +36,7 @@ test_stack8(void)
 		    "        (received %d)\n", val);
 		exit(EXIT_FAILURE);
 	}
-	if (1 != pop8(st))
+	if (1 != (val = pop8(st)))
 		errx(EX_SOFTWARE,
 		    "FAILED: should have received 1 from the stack.");
 	if (!empty8(st))
@@ -62,7 +62,7 @@ test_stack16(void)
 
 	push16(st, 1);
 	push16(st, 2);
-	if (2 != pop16(st)) {
+	if (2 != (val = pop16(st))) {
 		fprintf(stderr,
 		    "FAILED: should have received 2 from the stack.\n");
 		fprintf(stderr,
