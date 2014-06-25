@@ -37,7 +37,10 @@ test1(void)
 	}
 
 	printf("> %d\n", vm_peek(vm));
-
+	if (vm_peek(vm) != 8)
+		fprintf(stderr, "prog2.bin: FAILED\n");
+	else
+		printf("prog1.bin: OK\n");
 
 	vm_destroy(vm);
 }
@@ -78,6 +81,10 @@ test2(void)
 	}
 
 	printf("> %d\n", vm_peek(vm));
+	if (vm_peek(vm) != 8)
+		fprintf(stderr, "prog2.bin: FAILED\n");
+	else
+		printf("prog2.bin: OK\n");
 
 	vm_destroy(vm);
 }
@@ -86,8 +93,10 @@ test2(void)
 int
 main(void)
 {
+	printf("Starting VM tests.\n");
 	test1();
 	test2();
+	printf("VM tests complete.\n");
 
 	return EXIT_SUCCESS;
 }
