@@ -111,9 +111,6 @@ vm_step(machine vm, uint8_t *prog, uint16_t prog_len)
 	case INSTR_SUB:  /* the op stack                        */
 	case INSTR_DIV:
 	case INSTR_MUL:
-	case INSTR_EQL:
-	case INSTR_JRE:
-	case INSTR_JRN:
 		push8(vm->opers, oper);
 		break;
 	case INSTR_IMM:
