@@ -16,19 +16,19 @@
   stack for values. The instructions may be grouped into two
   segments: control and operators. The control instructions are
 
-	+ STOP :: end execution
-        + IMM :: push a 16-bit integer onto the stack
-        + DO :: pop the top two values from the stack, pop an operator
+  + STOP :: end execution
+  + IMM :: push a 16-bit integer onto the stack
+  + DO :: pop the top two values from the stack, pop an operator
                 off the operator stack, and apply the operator to the
                 two values. The result is pushed back onto the value
                 stack.
 
   The operators are
 
-	+ ADD
-	+ SUB  
-	+ MUL 
-	+ DIV 
+  + ADD
+  + SUB  
+  + MUL 
+  + DIV 
 
   These operators all act on 16-bit unsigned integers.
 
