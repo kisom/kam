@@ -25,9 +25,6 @@ vmtest: $(STACK) $(VM) vmtest.c
 kamvm: $(STACK) $(VM) kamvm.c
 	$(CC) $(CFLAGS) -o $@ stack.c vm.c kamvm.c
 
-jmpcalc: jmpcalc.c
-	$(CC) $(CFLAGS) -o $@ jmpcalc.c
-
 kamc: $(QUEUE) compiler.c
 	$(CC) $(CFLAGS) -o $@ stack.c queue.c compiler.c
 
@@ -38,4 +35,4 @@ test: stest qtest vmtest kamc kamvm
 
 .PHONY: clean
 clean:
-	rm -f *.o $(TARGETS) core jmpcalc prog.bin
+	rm -f *.o $(TARGETS) core prog.bin
