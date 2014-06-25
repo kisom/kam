@@ -1,3 +1,90 @@
 * kam: kyle's arithmetic machine
 
   Nothing to see here, just goofing around with virtual machines.
+
+** What is this?
+
+   Just a silly dual-stack arithmetic machine.
+
+** A compiler? and a VM? for an arithmetic calculator?
+
+   Yep. Like I said, just goofing around with some of the concepts.
+
+* The virtual machine
+
+  The virtual machine has an 8-bit stack for operators, and a 16-bit
+  stack for values. The instructions may be grouped into two
+  segments: control and operators. The control instructions are
+
+	+ STOP :: end execution
+        + IMM :: push a 16-bit integer onto the stack
+        + DO :: pop the top two values from the stack, pop an operator
+                off the operator stack, and apply the operator to the
+                two values. The result is pushed back onto the value
+                stack.
+
+  The operators are
+
+	+ ADD
+	+ SUB  
+	+ MUL 
+	+ DIV 
+
+  These operators all act on 16-bit unsigned integers.
+
+  The VM accepts a single binary file on the command line, and will
+  run it. A typical run looks something like
+
+#+BEGIN_EXAMPLE
+$ ./kamvm compiled/prog1.bin 
+Loading 13 byte program.
+Starting VM.
+> 20
+OK
+#+END_EXAMPLE
+  
+  The program size is reported. If the program is loaded successfully,
+  the VM is started, executes the program, and reports the result
+  after the ~>~ prompt. If no error occurred, an "OK" is printed, and
+  the VM exits. Typically, if the VM runs into errors, it will dump
+  core with a call to ~abort(2)~ to facilitate debugging.
+
+* The KAM compiler
+
+  The syntax is extremely simple: everything should be enclosed in
+  parenthesis, and normal numbers are used. The simplest program is
+
+#+BEGIN_EXAMPLE
+  (2 + 2)
+#+END_EXAMPLE
+
+  As a consequence of the way this is implemented, Lisp-style notation
+  is also possible.
+
+  + source/notlispy.sm
+#+BEGIN_EXAMPLE
+   ((2 * 3) + (10 / 2))
+#+END_EXAMPLE
+
+  + source/lispy.sm
+#+BEGIN_EXAMPLE
+(+ (* 2 3) (/ 10 2))
+#+END_EXAMPLE
+
+   If no source file is given on the command line, the compiler will read
+   source from standard input; the write stage happens when an EOF (for
+   example, C-d) is encountered.
+
+   At this stage, the compiler is still in a rather primitive state,
+   and illegal programs are still permitted (i.e. very little syntax
+   checking is done). This is something I still have to learn.
+
+* TODOs
+
+  + Convert the compiler to lex/yacc.
+
+* Down the road
+
+  Eventually, I'd like to design and build register machines, symbolic
+  machines, and some combination of the two. I've got lots of ideas,
+  and limited time for hacking, though.

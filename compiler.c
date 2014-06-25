@@ -83,6 +83,7 @@ parse_next(uint8_t cur)
 				return -1;
 			}
 			compiler.buf[compiler.buf_index++] = cur;
+			return 0;
 		} else {
 			if (-1 == finalise_number()) {
 				return -1;

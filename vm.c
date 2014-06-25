@@ -65,37 +65,16 @@ eval(machine vm)
 
 	switch (oper) {
 	case INSTR_ADD:
-		printf("ADD %d %d\n", a, b);
 		push16(vm->vals, a + b);
 		break;
 	case INSTR_SUB:
-		printf("SUB %d %d\n", a, b);
 		push16(vm->vals, a - b);
 		break;
 	case INSTR_MUL:
-		printf("MUL %d %d\n", a, b);
 		push16(vm->vals, a * b);
 		break;
 	case INSTR_DIV:
-		printf("DIV %d %d\n", a, b);
 		push16(vm->vals, a / b);
-		break;
-	case INSTR_EQL:
-		printf("EQL %d %d\n", a, b);
-		push16(vm->vals, a == b);
-		break;
-	case INSTR_JRE:
-		printf("JRE %d %d\n", a, b);
-		if (a == 1) {
-			if (b & (1 << 15)) {
-				printf("BACK %hu\n", (~b)+1);
-				vm->pc -= (~b)+1;
-				printf("PC=%d\n", vm->pc);
-			} else {
-				printf("FWD %d\n", b);
-				vm->pc += b;
-			}
-		}
 		break;
 	default:
 		abort(); /* illegal instruction trap ;) */
@@ -135,7 +114,6 @@ vm_step(machine vm, uint8_t *prog, uint16_t prog_len)
 	case INSTR_EQL:
 	case INSTR_JRE:
 	case INSTR_JRN:
-		printf("OPER %d\n", oper);
 		push8(vm->opers, oper);
 		break;
 	case INSTR_IMM:
@@ -152,12 +130,10 @@ vm_step(machine vm, uint8_t *prog, uint16_t prog_len)
 			return VM_ERR;
 		}
 		memcpy(&val, prog + vm->pc, sizeof(val));
-		printf("IMM %d\n", val);
 		push16(vm->vals, val);
 		vm->pc += 2; /* 2 bytes == 16 bits */
 		break;
 	case INSTR_DO:
-		printf("DO\n");
 		return eval(vm);
 	default:
 		fprintf(stderr, "[!] Unknown operator: %d.\n", oper);

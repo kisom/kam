@@ -1,5 +1,9 @@
 tags
 *.o
 stest
+qtest
+core
+prog.bin
 vmtest
 kamvm
+kamc
