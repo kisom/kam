@@ -126,6 +126,8 @@ vm_step(machine vm, uint8_t *prog, uint16_t prog_len)
 	oper = prog[vm->pc];
 	vm->pc++;
 	switch (oper) {
+	case INSTR_STOP:
+		return VM_STOP;
 	case INSTR_ADD:  /* fall through: store the operator in */
 	case INSTR_SUB:  /* the op stack                        */
 	case INSTR_DIV:

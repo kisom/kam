@@ -1,19 +1,23 @@
-TARGETS = stest vmtest kamvm compiler
+TARGETS = stest qtest vmtest kamvm kamc
 STACK := stack.c stack.h
-COMPILER := compiler.c compiler.h compiler.yy.c
+QUEUE := queue.c queue.h
+COMPILER := compiler.c
 VM := vm.c vm.h
 CC ?= clang
 LEX ?= flex
 CFLAGS += -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align
 CFLAGS += -Wwrite-strings -Wmissing-prototypes -Wmissing-declarations
 CFLAGS += -Wnested-externs -Winline -Wno-long-long  -Wunused-variable
-CFLAGS += -Wstrict-prototypes -Werror -ansi -static -g -O0
+CFLAGS += -Wstrict-prototypes -Werror -ansi -static -g -O0 -D_XOPEN_SOURCE
 
 .PHONY: all
 all: $(TARGETS)
 
 stest: $(STACK) stest.c
 	$(CC) $(CFLAGS) -o $@ stack.c stest.c
+
+qtest: $(STACK) $(QUEUE) qtest.c
+	$(CC) $(CFLAGS) -o $@ queue.c stack.c qtest.c
 
 vmtest: $(STACK) $(VM) vmtest.c
 	$(CC) $(CFLAGS) -o $@ stack.c vm.c vmtest.c
@@ -24,15 +28,14 @@ kamvm: $(STACK) $(VM) kamvm.c
 jmpcalc: jmpcalc.c
 	$(CC) $(CFLAGS) -o $@ jmpcalc.c
 
-compiler: compiler.l compiler.y
-	$(YACC) -o compiler.c -d compiler.y
-	$(LEX) -o compiler.yy.c compiler.l
-	$(CC) -o $@ compiler.c compiler.yy.c -lfl
+kamc: $(QUEUE) $(STACK) compiler.c
+	$(CC) $(CFLAGS) -o $@ stack.c queue.c compiler.c
 
 .PHONY: test
-test: stest vmtest
-	./stest && ./vmtest
+test: stest qtest vmtest kamc kamvm
+	./stest && ./qtest && ./vmtest && ./test_compiler.sh \
+		&& ./test_vm.sh && echo "All tests passed."
 
 .PHONY: clean
 clean:
-	rm -f *.o $(TARGETS) core $(COMPILER)
+	rm -f *.o $(TARGETS) core jmpcalc

@@ -3,6 +3,7 @@
 
 
 typedef enum e_op {
+	INSTR_STOP	= 0,
 	INSTR_ADD	= 1,
 	INSTR_SUB	= 2,
 	INSTR_MUL	= 3,
