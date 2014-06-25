@@ -3,6 +3,7 @@
 TEMP_BIN=$(mktemp)
 FAILED=0
 
+echo "Testing compiler kamc."
 ./kamc -o $TEMP_BIN source/prog1.sm
 diff $TEMP_BIN compiled/prog1.bin
 if [ $? -ne 0 ]; then

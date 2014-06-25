@@ -2,6 +2,7 @@
 
 STATUS=0
 
+echo "Testing virtual machine kamvm."
 RESULT="$(./kamvm compiled/prog1.bin | grep '^>' | awk '{print $2;}')"
 if [ "$RESULT" != "20" ]; then
 	echo "[!] prog1.bin: expected a result of 20, got $RESULT."

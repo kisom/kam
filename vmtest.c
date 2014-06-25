@@ -36,7 +36,6 @@ test1(void)
 		errx(EX_SOFTWARE, "FAILED: VM stopped with error.\n");
 	}
 
-	printf("> %d\n", vm_peek(vm));
 	if (vm_peek(vm) != 20)
 		fprintf(stderr, "prog2.bin: FAILED\n");
 	else
@@ -80,7 +79,6 @@ test2(void)
 		errx(EX_SOFTWARE, "FAILED: VM stopped with error.\n");
 	}
 
-	printf("> %d\n", vm_peek(vm));
 	if (vm_peek(vm) != 8)
 		fprintf(stderr, "prog2.bin: FAILED\n");
 	else
