@@ -104,3 +104,9 @@ OK
   Eventually, I'd like to design and build register machines, symbolic
   machines, and some combination of the two. I've got lots of ideas,
   and limited time for hacking, though.
+
+* Motivation
+
+  I was watching the Algorithms 1 lectures (from the Coursera class)
+  for this week, and the professor mentioned dual-stack machines. That
+  put a bug in my head that I needed to get out.
