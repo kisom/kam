@@ -37,7 +37,7 @@ test1(void)
 	}
 
 	printf("> %d\n", vm_peek(vm));
-	if (vm_peek(vm) != 8)
+	if (vm_peek(vm) != 20)
 		fprintf(stderr, "prog2.bin: FAILED\n");
 	else
 		printf("prog1.bin: OK\n");
