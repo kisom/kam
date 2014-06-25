@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "node.h"
 #include "queue.h"
 
 queue8

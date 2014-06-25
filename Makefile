@@ -1,6 +1,6 @@
 TARGETS = stest qtest vmtest kamvm kamc
-STACK := stack.c stack.h
-QUEUE := queue.c queue.h
+STACK := stack.c stack.h node.h
+QUEUE := queue.c queue.h node.h
 COMPILER := compiler.c
 VM := vm.c vm.h
 CC ?= clang
@@ -16,7 +16,7 @@ all: $(TARGETS)
 stest: $(STACK) stest.c
 	$(CC) $(CFLAGS) -o $@ stack.c stest.c
 
-qtest: $(STACK) $(QUEUE) qtest.c
+qtest: $(QUEUE) qtest.c
 	$(CC) $(CFLAGS) -o $@ queue.c stack.c qtest.c
 
 vmtest: $(STACK) $(VM) vmtest.c
@@ -28,7 +28,7 @@ kamvm: $(STACK) $(VM) kamvm.c
 jmpcalc: jmpcalc.c
 	$(CC) $(CFLAGS) -o $@ jmpcalc.c
 
-kamc: $(QUEUE) $(STACK) compiler.c
+kamc: $(QUEUE) compiler.c
 	$(CC) $(CFLAGS) -o $@ stack.c queue.c compiler.c
 
 .PHONY: test

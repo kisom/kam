@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 
+#include "node.h"
 #include "stack.h"
 
 

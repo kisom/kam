@@ -1,8 +1,11 @@
 #ifndef __KAM_QUEUE_H
 #define __KAM_QUEUE_H
 
+
 #include <stdint.h>
-#include "stack.h"
+
+#include "node.h"
+
 
 typedef struct s_queue8 {
 	struct node8	*head;

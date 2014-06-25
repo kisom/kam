@@ -5,10 +5,8 @@
 #include <stdint.h>
 
 
-struct node8 {
-	uint8_t		 val;
-	struct node8	*next;
-};
+#include "node.h"
+
 
 typedef struct s_stack8 {
 	struct node8	*st;
