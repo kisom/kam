@@ -165,6 +165,7 @@ write_program(void)
 		prog[pc++] = dequeue8(compiler.q);		
 
 	if (0 == fwrite(prog, 1, prog_size, compiler.out)) {
+		free(prog);
 		fprintf(stderr, "Failed to write program to file.\n");
 		return -1;
 	}
