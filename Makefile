@@ -38,4 +38,4 @@ test: stest qtest vmtest kamc kamvm
 
 .PHONY: clean
 clean:
-	rm -f *.o $(TARGETS) core jmpcalc
+	rm -f *.o $(TARGETS) core jmpcalc prog.bin
