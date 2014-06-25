@@ -22,7 +22,7 @@ test1(void)
 	 * 06		; DO (ADD 0x0002 0x0002)
 	 * 06		; DO (MUL 0x0004 0x0005)
 	 */
-	uint8_t		prog[] = "\x05\x05\x00\x01\x05\x02\x00\x03\x05"
+	uint8_t		prog[] = "\x05\x05\x00\x03\x05\x02\x00\x01\x05"
 	    			 "\x02\x00\x06\x06";
 	uint16_t	prog_len = sizeof(prog)+1;
 	machine		vm;
