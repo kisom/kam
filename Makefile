@@ -8,7 +8,8 @@ LEX ?= flex
 CFLAGS += -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align
 CFLAGS += -Wwrite-strings -Wmissing-prototypes -Wmissing-declarations
 CFLAGS += -Wnested-externs -Winline -Wno-long-long  -Wunused-variable
-CFLAGS += -Wstrict-prototypes -Werror -ansi -static -g -O0 -D_XOPEN_SOURCE
+CFLAGS += -Wstrict-prototypes -Werror -ansi -static -D_XOPEN_SOURCE
+CFLAGS += -g -O0
 
 .PHONY: all
 all: $(TARGETS)
