@@ -75,9 +75,25 @@ OK
    source from standard input; the write stage happens when an EOF (for
    example, C-d) is encountered.
 
+   Rudimentary syntax checking is provided through use of a pair of
+   counters, the active values and active operators counters. When a
+   value is encountered, the active value counter is incremented;
+   similarly, when an operator is encountered, the active operators
+   counter is incremented. When a DO is encountered, the compiler will
+   check to ensure that there is at least one active operator and at
+   least two active values present. If there are, compilation
+   continues and both of these counters are decremented. The values
+   counter is decremented only once due to the fact that, after
+   applying the operator to the two values, the VM pushes the result
+   back onto the stack. Despite popping two values, one value is
+   pushed back onto the stack, giving a net loss of only one
+   value. When the compiler reaches EOF in the source file, it warns
+   the user if there are any operators left on the operator stack or
+   if a single value (including no values) are left on the value
+   stack.
+
    At this stage, the compiler is still in a rather primitive state,
-   and illegal programs are still permitted (i.e. very little syntax
-   checking is done). This is something I still have to learn.
+   and illegal programs are likely still permitted.
 
 * TODOs
 
